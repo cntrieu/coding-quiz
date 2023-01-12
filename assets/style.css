@@ -1,0 +1,31 @@
+body {
+    font-family: sans-serif;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    margin: 1em;
+}
+
+main {
+    display: block;
+    text-align: center;
+}
+
+#start-page h1 {
+ font-size: 2em;
+}
+
+#start-page p {
+    max-width: 30%;
+    font-size: 1.5em;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#start-btn {
+    padding: 10px;
+    font-weight: bolder;
+    border-radius: 15px;
+}
