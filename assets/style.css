@@ -26,6 +26,13 @@ main {
 
 #start-btn {
     padding: 10px;
+    font-size: 1em;
     font-weight: bolder;
     border-radius: 15px;
+    cursor: pointer;
+}
+
+#start-btn:hover {
+    color: white;
+    background-color: purple;
 }
