@@ -10,10 +10,8 @@
 
 <body>
     <header>
-      <div id="high-score-btn">
-        <a href="#">
-            <h2>View high scores</h2>
-        </a>
+      <div>
+            <h2 id="high-score-btn">View high scores</h2>
       </div>
 
         <h2>Time: <span id="timer">0</span></h2>
@@ -24,6 +22,7 @@
         <h1>Coding Quiz Challenge!</h1>
         <p>Complete a series of coding-related multiple choice questions within one minute. Get an answer wrong, and 10 seconds is gone from the clock? Are you ready?</p>
         <button id="start-btn">Let's Start!</button>
+
     </section>
 
     <section id="question-container">
@@ -37,11 +36,17 @@
         <h2>Good job! You scored <span id="user-score"></span></h2>
         <form>
           <label for="user-initial">Enter your initials: </label>
-            <input type="text" name="user-initial">
-            <input type="submit" id="user-initial" value="Submit">
+            <input type="text" id="user-text" name="user-initial">
+            <input type="submit" id="user-initial-submit" value="Submit">
         </form>
         
       </div>
+    </section>
+
+    <section id="high-score-page">
+      <ol id="scores-list">
+
+      </ol>
     </section>
 
     </main>
