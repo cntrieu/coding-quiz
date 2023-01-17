@@ -3,18 +3,22 @@ var startPage = document.querySelector("#start-page");
 var timer = document.querySelector("#timer");
 
 var highScoreBtn = document.querySelector("#high-score-btn");
+var highScorePage = document.querySelector("#high-score-page");
+var scoresList = document.querySelector("#scores-list");
 var questionContainer = document.querySelector("#question-container");
 var questionsEl = document.querySelector(".questions");
 var body = document.body;
 
 var timesUp = document.querySelector("#times-up");
 var showScore = document.querySelector(".show-score");
+var userScore = document.querySelector("#user-score");
+var userInputSubmit = document.querySelector("#user-initial-submit");
 
 var score = 0;
+var highScore = "";
 var currentQuestion, shuffledQuestions;
 
-var orderedList = document.querySelector("#ordered-list");
-
+// Add more questions
 var questionsArray = [
     {
         question: "which phase of propagation travels from the target node to the root node?",
@@ -56,15 +60,18 @@ var questionShuffle = function () {
     return shuffledQuestions;
 }
 
+// Only displays the question container
 var startQuiz = function () {
     startPage.style.display = "none";
     questionContainer.style.display = "block";
+    timesUp.style.display = "none";
     currentQuestion = 0;
     timerStart();
     questionShuffle();
     nextQuestion();
 }
 
+// When called, it goes to the next question as it iterates to the next currentQuestion variable
 var goNext = function () {
     currentQuestion++;
     nextQuestion();
@@ -105,6 +112,7 @@ var displayQuestion = function(question) {
 var answerCheck = function (e) {
     var answerSelection = e.target;
 
+    // Matching button clicked to the 'correct' object in the questionsArray
     if (answerSelection.textContent === questionsArray[currentQuestion].correct) {
         score++;
         displayCorrect();
@@ -113,13 +121,15 @@ var answerCheck = function (e) {
         displayINcorrect();
     }
 
+    // If there are more questions, call goNext(). If no more questions, call timeOver()
     if(shuffledQuestions.length > currentQuestion + 1) {
         goNext();
     } else {
-        showResults();
+        timeOver();
     }
 }
 
+// Displaying a temporary visual cue to user's choice
 var displayCorrect = function () {
     var correctEl = document.createElement("h2");
     correctEl.textContent = "Correct!";
@@ -142,15 +152,15 @@ var displayINcorrect = function () {
     questionContainer.appendChild(inCorrectEl);
 }
 
-
-
+// Initial timer to start at 60 when function is called that will run only when timer is above 0.
 var timerStart = function() {
     timer.textContent = 60;
 
     var interval = setInterval(function() {
-        timer.textContent--;
-
-        if(timer.textContent == 0) {
+        if(timer.textContent > 0) {
+            timer.textContent--;
+        } else if(timer.textContent === 0 || timer.textContent < 0) {
+            timer.textContent = 0;
             clearInterval(interval);
             timeOver();
          }
@@ -159,19 +169,60 @@ var timerStart = function() {
 
 var timeOver = function () {
     timesUp.style.display = "block";
+    startPage.style.display = "none";
+    questionContainer.style.display = "none";
+
+    // Set timer to 0 so the timerStart function can clearInterval
+    timer.textContent = 0;
+    userScore.textContent = score + "/" + shuffledQuestions.length;
+}
+
+// When user submits their initials, append 'play again' and 'view high scores' elements
+userInputSubmit.addEventListener("click", function (e) {
+    e.preventDefault();
+
+    var highScoreBeat = document.createElement("h3");
+    var form = document.querySelector("form");
+    highScoreBeat.textContent = "Your score has been recorded. Thanks for playing!"
     
+    form.appendChild(highScoreBeat);
+
+    var playAgainBtn = document.createElement("button");
+    playAgainBtn.textContent = "Play Again?";
+    playAgainBtn.setAttribute("style", "margin: 5px");
+    playAgainBtn.setAttribute("type", "button");
+
+ 
+    playAgainBtn.addEventListener("click", restart);
+
+    var viewScores = document.createElement("button");
+    viewScores.textContent = "View High Scores";
+    viewScores.setAttribute("style", "margin: 5px");
+    
+    viewScores.addEventListener("click", viewHighScores);
+
+    form.appendChild(highScoreBeat);
+    showScore.appendChild(playAgainBtn);
+    showScore.appendChild(viewScores);
+})
+
+var viewHighScores = function () {
+
 }
 
-var showResults = function () {
-    // CREATE FUNCTION FOR THE END OF THE QUIZ
+// Reload the entire page so the program restarts
+var restart = function () {
+    location.reload();
 }
 
-startBtn.addEventListener("click", startQuiz)
+// Calling the startQuiz function when the 'start' button is clicked
+startBtn.addEventListener("click", startQuiz);
 
 // On window load, hide the other containers so only the start page appears
 window.onload = function () {
     questionContainer.style.display = "none";
     timesUp.style.display = "none";
+    
 }
 
 
