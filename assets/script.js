@@ -13,15 +13,32 @@ var timesUp = document.querySelector("#times-up");
 var showScore = document.querySelector(".show-score");
 var userScore = document.querySelector("#user-score");
 var userInputSubmit = document.querySelector("#user-initial-submit");
+var userText = document.querySelector("#user-text");
+var goBackBtn = document.querySelector("#goBackBtn");
+var clearScoreBtn = document.querySelector("#clear-scores");
 
 var score = 0;
 var highScore = "";
+var scoreArray = [];
 var currentQuestion, shuffledQuestions;
+
+// Function called right away to display the start page and to load localStorage if available
+var init = function () {
+    questionContainer.style.display = "none";
+    timesUp.style.display = "none";
+    highScorePage.style.display = "none";
+
+    var allScores = JSON.parse(localStorage.getItem("scores"));
+
+    if (allScores !== null) {
+        scoreArray = allScores;
+    }
+}
 
 // Add more questions
 var questionsArray = [
     {
-        question: "which phase of propagation travels from the target node to the root node?",
+        question: "Which phase of propagation travels from the target node to the root node?",
         answers: ["A: Capturing", "B: Propagation", "C: Bubbling", "D: Travel"],
         correct: "C: Bubbling"
     },
@@ -34,16 +51,22 @@ var questionsArray = [
 
     {
         question: "What methods can be used with timers?",
-        answers: ["setTimeout", "setInterval", "clearInterval", "All of the above"],
-        correct: "All of the above" 
+        answers: ["A: setTimeout", "B: setInterval", "C: clearInterval", "D: All of the above"],
+        correct: "D: All of the above" 
     },
     {
         question: "Which answer best represents appending a child element?",
-        answers: ["document.appendChild(document2)", "document(appendChild).document2", "appendChild(document[document2])", "All of the above"],
-        correct: "document.appendChild(document2)" 
+        answers: ["A: document.appendChild(document2)", "B: document(appendChild).document2", "C: appendChild(document[document2])", "D: All of the above"],
+        correct: "A: document.appendChild(document2)" 
     },
+    {
+        question: "Which does JSON stand for?",
+        answers: ["A: JavaScript Orientation Nodule", "B: JavaScript Object Notation", "C: Java Overnight", "D: All of the above"],
+        correct: "B: JavaScript Object Notation" 
+    },
+    
+    
 ]
-
 
 // Randomizing the questions using Fisher-Yates algorithm
 var questionShuffle = function () {
@@ -77,37 +100,24 @@ var goNext = function () {
     nextQuestion();
 }
 
-
 var nextQuestion = function() {
     displayQuestion(shuffledQuestions[currentQuestion])
 }
 
-var displayQuestion = function(question) {
-    questionsEl.innerHTML = question.question;
+var displayQuestion = function(e) {
+    questionsEl.innerHTML = e.question;
+    
+    // looping through the nested array of questions and appending each and then calling answerCheck function on click
+    for (var i = 0; i < questionsArray.length - 1; i++) {
+        var answerArray = document.createElement("button");
+            answerArray.innerHTML = questionsArray[currentQuestion].answers[i];
+            answerArray.setAttribute("style", "display: block; margin: 10px; font-size: 1em;");
 
-    var answersContainer = document.createElement("div");
-    var answerli1 = document.createElement("button");
-    var answerli2 = document.createElement("button");
-    var answerli3 = document.createElement("button");
-    var answerli4 = document.createElement("button");
-
-    answerli1.innerHTML = questionsArray[currentQuestion].answers[0];
-    answerli2.innerHTML = questionsArray[currentQuestion].answers[1];
-    answerli3.innerHTML = questionsArray[currentQuestion].answers[2];
-    answerli4.innerHTML = questionsArray[currentQuestion].answers[3];
-
-    questionsEl.appendChild(answersContainer);
-    questionsEl.appendChild(answerli1);
-    questionsEl.appendChild(answerli2);
-    questionsEl.appendChild(answerli3);
-    questionsEl.appendChild(answerli4);
-
-    answerli1.addEventListener("click", answerCheck);
-    answerli2.addEventListener("click", answerCheck);
-    answerli3.addEventListener("click", answerCheck);
-    answerli4.addEventListener("click", answerCheck);
+            questionsEl.appendChild(answerArray);
+            answerArray.addEventListener("click", answerCheck);
+        }
+        
 }
-
 
 var answerCheck = function (e) {
     var answerSelection = e.target;
@@ -120,8 +130,10 @@ var answerCheck = function (e) {
         timer.textContent -= 10;
         displayINcorrect();
     }
-
-    // If there are more questions, call goNext(). If no more questions, call timeOver()
+    console.log(shuffledQuestions.length);
+    console.log(currentQuestion);
+    // If there are more questions, call goNext(). If no more questions, call timeOver(). 
+    // If length of shuffled questions is bigger than current Question + 1, there are more questions (currentQuestion starts at 0)
     if(shuffledQuestions.length > currentQuestion + 1) {
         goNext();
     } else {
@@ -133,6 +145,7 @@ var answerCheck = function (e) {
 var displayCorrect = function () {
     var correctEl = document.createElement("h2");
     correctEl.textContent = "Correct!";
+    correctEl.setAttribute("style", "transition: 0.4s; background-color: green; font-style: italic;");
     var correctInterval = setInterval(function () {
         correctEl.textContent = "";
         clearInterval(correctInterval);
@@ -144,6 +157,7 @@ var displayCorrect = function () {
 var displayINcorrect = function () {
     var inCorrectEl = document.createElement("h2");
     inCorrectEl.textContent = "Wrong!";
+    inCorrectEl.setAttribute("style", "transition: 0.4s; background-color: red; font-style: italic;");
     var inCorrectInterval = setInterval(function () {
         inCorrectEl.textContent = "";
         clearInterval(inCorrectInterval);
@@ -181,75 +195,83 @@ var timeOver = function () {
 userInputSubmit.addEventListener("click", function (e) {
     e.preventDefault();
 
+    var initials = userText.value.trim();
+    if (!initials) {
+        return;
+    }
+
+    var storedScore = {initials: initials, scores: score};
+    scoreArray.push(storedScore);
+    initials.textContent = "";
+
     var highScoreBeat = document.createElement("h3");
     var form = document.querySelector("form");
     highScoreBeat.textContent = "Your score has been recorded. Thanks for playing!"
     
     form.appendChild(highScoreBeat);
 
-    var playAgainBtn = document.createElement("button");
-    playAgainBtn.textContent = "Play Again?";
-    playAgainBtn.setAttribute("style", "margin: 5px");
-    playAgainBtn.setAttribute("type", "button");
-
- 
-    playAgainBtn.addEventListener("click", restart);
-
     var viewScores = document.createElement("button");
     viewScores.textContent = "View High Scores";
     viewScores.setAttribute("style", "margin: 5px");
-    
     viewScores.addEventListener("click", viewHighScores);
 
     form.appendChild(highScoreBeat);
-    showScore.appendChild(playAgainBtn);
     showScore.appendChild(viewScores);
+ 
+    storeScores();
 })
 
-var viewHighScores = function () {
-
+var storeScores = function () {
+    localStorage.setItem("scores", JSON.stringify(scoreArray));
 }
 
-// Reload the entire page so the program restarts
+var loadScores = function () {
+    var sortedScores = scoreArray.sort(function(a, b) {
+        return b.scores - a.scores;
+    })
+
+    // Looping through the sorted ascending array of scores and creating a list item for each
+    for (var i = 0; i < sortedScores.length; i++) {
+        var scoreli = document.createElement('li');
+        scoreli.textContent = sortedScores[i].initials + " " + sortedScores[i].scores;
+        scoreli.setAttribute("style", "text-align: left;")
+        scoresList.appendChild(scoreli);
+    }
+    
+    goBack();
+    clearScores();
+}
+
+var viewHighScores = function () {
+    highScorePage.style.display = "block";
+    timesUp.style.display = "none";
+    startPage.style.display = "none";
+    questionContainer.style.display = "none";
+    loadScores();
+}
+
+var goBack = function () {
+    goBackBtn.addEventListener("click", restart);
+}
+
+var clearScores = function () {
+    clearScoreBtn.addEventListener("click", function () { localStorage.removeItem('scores');
+    scoreArray = [];
+    restart();
+    });
+}
+
+
+
+// Reload the entire page so the program when this function called
 var restart = function () {
     location.reload();
 }
 
 // Calling the startQuiz function when the 'start' button is clicked
 startBtn.addEventListener("click", startQuiz);
+highScoreBtn.addEventListener("click", viewHighScores);
 
-// On window load, hide the other containers so only the start page appears
-window.onload = function () {
-    questionContainer.style.display = "none";
-    timesUp.style.display = "none";
-    
-}
-
-
-// var displayQuestions = function () {
-//     var questionH2 = document.createElement("h2");
-//     var allAnswers = document.createElement("div");
-//     var answerli1 = document.createElement("button");
-//     var answerli2 = document.createElement("button");
-//     var answerli3 = document.createElement("button");
-//     var answerli4 = document.createElement("button");
-//     var answerSelector = document.querySelector("button");
-
-//     questionH2.innerHTML = questionsArray[currentQuestion].question;
-
-//         answerli1.innerHTML = questionsArray[currentQuestion].answers[0].text;
-//         answerli2.innerHTML = questionsArray[currentQuestion].answers[1].text;
-//         answerli3.innerHTML = questionsArray[currentQuestion].answers[2].text;
-//         answerli4.innerHTML = questionsArray[currentQuestion].answers[3].text;
-
-//     questionsEl.appendChild(questionH2);
-//     questionsEl.appendChild(allAnswers);
-//     allAnswers.appendChild(answerli1);
-//     allAnswers.appendChild(answerli2);
-//     allAnswers.appendChild(answerli3);
-//     allAnswers.appendChild(answerli4);
-
-//     allAnswers.setAttribute("style", "display: flex; flex-direction: column; align-items: flex-start;");
-
-// }
+// On window load, call init which hides other displays except for start page
+init();
 
