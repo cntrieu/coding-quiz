@@ -275,3 +275,8 @@ highScoreBtn.addEventListener("click", viewHighScores);
 // On window load, call init which hides other displays except for start page
 init();
 
+
+
+
+// TO DO:
+// change the wrong and correct responses to HTML elements instead of appending
