@@ -1,13 +1,13 @@
 var startBtn = document.querySelector("#start-btn");
 var startPage = document.querySelector("#start-page");
 var timer = document.querySelector("#timer");
+var header = document.querySelector("header");
 
 var highScoreBtn = document.querySelector("#high-score-btn");
 var highScorePage = document.querySelector("#high-score-page");
 var scoresList = document.querySelector("#scores-list");
 var questionContainer = document.querySelector("#question-container");
 var questionsEl = document.querySelector(".questions");
-var body = document.body;
 
 var timesUp = document.querySelector("#times-up");
 var showScore = document.querySelector(".show-score");
@@ -71,7 +71,7 @@ var questionsArray = [
 // Randomizing the questions using Fisher-Yates algorithm
 var questionShuffle = function () {
     // Looping over items in reverse order
-    for (let i = questionsArray.length - 1; i > 0; i--) {
+    for (var i = questionsArray.length - 1; i > 0; i--) {
         var j = Math.floor(Math.random() * (i + 1));
 
         var temp = questionsArray[i];
@@ -106,17 +106,16 @@ var nextQuestion = function() {
 
 var displayQuestion = function(e) {
     questionsEl.innerHTML = e.question;
-    
+   
     // looping through the nested array of questions and appending each and then calling answerCheck function on click
     for (var i = 0; i < questionsArray.length - 1; i++) {
         var answerArray = document.createElement("button");
             answerArray.innerHTML = questionsArray[currentQuestion].answers[i];
-            answerArray.setAttribute("style", "display: block; margin: 10px; font-size: 1em;");
-
+            answerArray.setAttribute("style", "display: block; margin: 10px; padding: 15px; font-size: 0.45em; background-color: #7b52ab; color: white; cursor: pointer");
+          
             questionsEl.appendChild(answerArray);
             answerArray.addEventListener("click", answerCheck);
         }
-        
 }
 
 var answerCheck = function (e) {
@@ -145,7 +144,7 @@ var answerCheck = function (e) {
 var displayCorrect = function () {
     var correctEl = document.createElement("h2");
     correctEl.textContent = "Correct!";
-    correctEl.setAttribute("style", "transition: 0.4s; background-color: green; font-style: italic;");
+    correctEl.setAttribute("style", "background-color: green; font-style: italic; border-radius: 30px; opacity: 0.9;");
     var correctInterval = setInterval(function () {
         correctEl.textContent = "";
         clearInterval(correctInterval);
@@ -157,7 +156,7 @@ var displayCorrect = function () {
 var displayINcorrect = function () {
     var inCorrectEl = document.createElement("h2");
     inCorrectEl.textContent = "Wrong!";
-    inCorrectEl.setAttribute("style", "transition: 0.4s; background-color: red; font-style: italic;");
+    inCorrectEl.setAttribute("style", "background-color: red; font-style: italic; border-radius: 30px; opacity: 0.9;");
     var inCorrectInterval = setInterval(function () {
         inCorrectEl.textContent = "";
         clearInterval(inCorrectInterval);
@@ -233,8 +232,8 @@ var loadScores = function () {
     // Looping through the sorted ascending array of scores and creating a list item for each
     for (var i = 0; i < sortedScores.length; i++) {
         var scoreli = document.createElement('li');
-        scoreli.textContent = sortedScores[i].initials + " " + sortedScores[i].scores;
-        scoreli.setAttribute("style", "text-align: left;")
+        scoreli.textContent = sortedScores[i].initials + " ------ " + sortedScores[i].scores + " point(s)";
+        scoreli.setAttribute("style", "text-align: left; padding: 0.25em 1em 0.25em 1em;");
         scoresList.appendChild(scoreli);
     }
     
@@ -247,6 +246,7 @@ var viewHighScores = function () {
     timesUp.style.display = "none";
     startPage.style.display = "none";
     questionContainer.style.display = "none";
+    header.style.display = "none";
     loadScores();
 }
 
