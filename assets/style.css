@@ -1,3 +1,7 @@
+* {
+    box-sizing: border-box;
+}
+
 body {
     font-family: sans-serif;
 }
@@ -11,6 +15,9 @@ header {
 main {
     display: block;
     text-align: center;
+    max-width: 80%;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 #start-page h1 {
@@ -18,13 +25,10 @@ main {
 }
 
 #start-page p {
-    max-width: 30%;
     font-size: 1.5em;
-    margin-left: auto;
-    margin-right: auto;
 }
 
-#start-btn {
+#start-btn, .high-score-btns {
     padding: 10px;
     font-size: 1em;
     font-weight: bolder;
@@ -45,6 +49,23 @@ main {
 #question-container {
     max-width: 30%;
     font-size: 1.5em;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#high-score-page button {
+    margin: 1em;
+    font-size: 1em;
+}
+
+.high-score-btns:hover {
+    background-color: purple;
+    cursor: pointer;
+}
+
+
+#scores-list {
+    max-width: 15%;
     margin-left: auto;
     margin-right: auto;
 }
