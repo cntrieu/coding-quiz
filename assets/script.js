@@ -60,29 +60,24 @@ var questionsArray = [
         correct: "A: document.appendChild(document2)" 
     },
     {
-        question: "Which does JSON stand for?",
+        question: "What does JSON stand for?",
         answers: ["A: JavaScript Orientation Nodule", "B: JavaScript Object Notation", "C: Java Overnight", "D: All of the above"],
         correct: "B: JavaScript Object Notation" 
     },
     {
-        question: "Which does JSON stand for?",
-        answers: ["A: JavaScript Orientation Nodule", "B: JavaScript Object Notation", "C: Java Overnight", "D: All of the above"],
-        correct: "B: JavaScript Object Notation" 
+        question: "What method would we use to prevent a user from submitting a form?",
+        answers: ["A: stopSubmit()", "B: noSubmit()", "C: preventDefault()", "D: All of the above"],
+        correct: "C: preventDefault()" 
     },
     {
-        question: "Which does JSON stand for?",
-        answers: ["A: JavaScript Orientation Nodule", "B: JavaScript Object Notation", "C: Java Overnight", "D: All of the above"],
-        correct: "B: JavaScript Object Notation" 
+        question: "In jQuery, how do we represent the method addEventListener()?",
+        answers: ["A: .addEventListener()", "B: .on()", "C: .onClick()", "D: .listen()"],
+        correct: "B: .on()" 
     },
     {
-        question: "Which does JSON stand for?",
-        answers: ["A: JavaScript Orientation Nodule", "B: JavaScript Object Notation", "C: Java Overnight", "D: All of the above"],
-        correct: "B: JavaScript Object Notation" 
-    },
-    {
-        question: "Which does JSON stand for?",
-        answers: ["A: JavaScript Orientation Nodule", "B: JavaScript Object Notation", "C: Java Overnight", "D: All of the above"],
-        correct: "B: JavaScript Object Notation" 
+        question: "How do we check the value of a variable?",
+        answers: ["A: typeof()", "B: variable()", "C: check()", "D: var()"],
+        correct: "A: typeof()" 
     },
     
 ]
