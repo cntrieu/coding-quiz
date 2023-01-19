@@ -77,6 +77,21 @@ main {
     font-size: 1.5em;
 }
 
+.questions-btn {
+    font-style: italic; 
+    border-radius: 30px; 
+    opacity: 0.9;
+    display: none;
+}
+
+#correct {
+    background-color: green;
+}
+
+#wrong {
+    background-color: red;
+}
+
 @media screen and (max-width: 992px) {
     main {
         margin: 0 auto 0 auto;
