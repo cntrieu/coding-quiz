@@ -64,7 +64,26 @@ var questionsArray = [
         answers: ["A: JavaScript Orientation Nodule", "B: JavaScript Object Notation", "C: Java Overnight", "D: All of the above"],
         correct: "B: JavaScript Object Notation" 
     },
-    
+    {
+        question: "Which does JSON stand for?",
+        answers: ["A: JavaScript Orientation Nodule", "B: JavaScript Object Notation", "C: Java Overnight", "D: All of the above"],
+        correct: "B: JavaScript Object Notation" 
+    },
+    {
+        question: "Which does JSON stand for?",
+        answers: ["A: JavaScript Orientation Nodule", "B: JavaScript Object Notation", "C: Java Overnight", "D: All of the above"],
+        correct: "B: JavaScript Object Notation" 
+    },
+    {
+        question: "Which does JSON stand for?",
+        answers: ["A: JavaScript Orientation Nodule", "B: JavaScript Object Notation", "C: Java Overnight", "D: All of the above"],
+        correct: "B: JavaScript Object Notation" 
+    },
+    {
+        question: "Which does JSON stand for?",
+        answers: ["A: JavaScript Orientation Nodule", "B: JavaScript Object Notation", "C: Java Overnight", "D: All of the above"],
+        correct: "B: JavaScript Object Notation" 
+    },
     
 ]
 
@@ -108,7 +127,8 @@ var displayQuestion = function(e) {
     questionsEl.innerHTML = e.question;
    
     // looping through the nested array of questions and appending each and then calling answerCheck function on click
-    for (var i = 0; i < questionsArray.length - 1; i++) {
+    // Iterating only to 4 because that is the amount of 'answers' that is needed
+    for (var i = 0; i < 4; i++) {
         var answerArray = document.createElement("button");
             answerArray.innerHTML = questionsArray[currentQuestion].answers[i];
             answerArray.setAttribute("style", "display: block; margin: 10px; padding: 15px; font-size: 0.45em; background-color: #7b52ab; color: white; cursor: pointer");
@@ -142,27 +162,23 @@ var answerCheck = function (e) {
 
 // Displaying a temporary visual cue to user's choice
 var displayCorrect = function () {
-    var correctEl = document.createElement("h2");
-    correctEl.textContent = "Correct!";
-    correctEl.setAttribute("style", "background-color: green; font-style: italic; border-radius: 30px; opacity: 0.9;");
+    var correctEl = document.getElementById("correct");
+    correctEl.style.display = "block";
+
     var correctInterval = setInterval(function () {
-        correctEl.textContent = "";
+        correctEl.style.display = "none";
         clearInterval(correctInterval);
     }, 500)
-
-    questionContainer.appendChild(correctEl);
 }
 
 var displayINcorrect = function () {
-    var inCorrectEl = document.createElement("h2");
-    inCorrectEl.textContent = "Wrong!";
-    inCorrectEl.setAttribute("style", "background-color: red; font-style: italic; border-radius: 30px; opacity: 0.9;");
+    var wrongEl = document.getElementById("wrong");
+    wrongEl.style.display = "block";
+
     var inCorrectInterval = setInterval(function () {
-        inCorrectEl.textContent = "";
+        wrongEl.style.display = "none";
         clearInterval(inCorrectInterval);
     }, 500)
-
-    questionContainer.appendChild(inCorrectEl);
 }
 
 // Initial timer to start at 60 when function is called that will run only when timer is above 0.
@@ -199,9 +215,10 @@ userInputSubmit.addEventListener("click", function (e) {
         return;
     }
 
+    // An object that holds initials and scores. The
     var storedScore = {initials: initials, scores: score};
     scoreArray.push(storedScore);
-    initials.textContent = "";
+   
 
     var highScoreBeat = document.createElement("h3");
     var form = document.querySelector("form");
