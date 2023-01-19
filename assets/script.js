@@ -120,9 +120,8 @@ var nextQuestion = function() {
 var displayQuestion = function(e) {
     questionsEl.innerHTML = e.question;
    
-    // looping through the nested array of questions and appending each and then calling answerCheck function on click
-    // Iterating only to 4 because that is the amount of 'answers' that each question has
-    for (var i = 0; i < 4; i++) {
+    // looping through the nested array length of answers and appending each and then calling answerCheck function on click
+    for (var i = 0; i < questionsArray[currentQuestion].answers.length; i++) {
         var answerArray = document.createElement("button");
             answerArray.innerHTML = questionsArray[currentQuestion].answers[i];
             answerArray.setAttribute("class", "btn-answers");
