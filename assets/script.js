@@ -35,7 +35,6 @@ var init = function () {
     }
 }
 
-// Add more questions
 var questionsArray = [
     {
         question: "Which phase of propagation travels from the target node to the root node?",
@@ -122,11 +121,11 @@ var displayQuestion = function(e) {
     questionsEl.innerHTML = e.question;
    
     // looping through the nested array of questions and appending each and then calling answerCheck function on click
-    // Iterating only to 4 because that is the amount of 'answers' that is needed
+    // Iterating only to 4 because that is the amount of 'answers' that each question has
     for (var i = 0; i < 4; i++) {
         var answerArray = document.createElement("button");
             answerArray.innerHTML = questionsArray[currentQuestion].answers[i];
-            answerArray.setAttribute("style", "display: block; margin: 10px; padding: 15px; font-size: 0.45em; background-color: #7b52ab; color: white; cursor: pointer");
+            answerArray.setAttribute("class", "btn-answers");
           
             questionsEl.appendChild(answerArray);
             answerArray.addEventListener("click", answerCheck);
@@ -144,8 +143,7 @@ var answerCheck = function (e) {
         timer.textContent -= 10;
         displayINcorrect();
     }
-    console.log(shuffledQuestions.length);
-    console.log(currentQuestion);
+ 
     // If there are more questions, call goNext(). If no more questions, call timeOver(). 
     // If length of shuffled questions is bigger than current Question + 1, there are more questions (currentQuestion starts at 0)
     if(shuffledQuestions.length > currentQuestion + 1) {
@@ -155,7 +153,7 @@ var answerCheck = function (e) {
     }
 }
 
-// Displaying a temporary visual cue to user's choice
+// Displaying a temporary visual cue to user's choice (correct or wrong)
 var displayCorrect = function () {
     var correctEl = document.getElementById("correct");
     correctEl.style.display = "block";
@@ -163,7 +161,7 @@ var displayCorrect = function () {
     var correctInterval = setInterval(function () {
         correctEl.style.display = "none";
         clearInterval(correctInterval);
-    }, 500)
+    }, 450)
 }
 
 var displayINcorrect = function () {
@@ -173,7 +171,7 @@ var displayINcorrect = function () {
     var inCorrectInterval = setInterval(function () {
         wrongEl.style.display = "none";
         clearInterval(inCorrectInterval);
-    }, 500)
+    }, 450)
 }
 
 // Initial timer to start at 60 when function is called that will run only when timer is above 0.
@@ -198,10 +196,12 @@ var timeOver = function () {
 
     // Set timer to 0 so the timerStart function can clearInterval
     timer.textContent = 0;
+
+    // Display users score out of the amount of questions
     userScore.textContent = score + "/" + shuffledQuestions.length;
 }
 
-// When user submits their initials, append 'play again' and 'view high scores' elements
+// When user submits their initials, store their score in an object by using push(). Afterwards, append 'view high scores' element and then call storeScores to store the scores in localStorage
 userInputSubmit.addEventListener("click", function (e) {
     e.preventDefault();
 
@@ -219,8 +219,6 @@ userInputSubmit.addEventListener("click", function (e) {
     var form = document.querySelector("form");
     highScoreBeat.textContent = "Your score has been recorded. Thanks for playing!"
     
-    form.appendChild(highScoreBeat);
-
     var viewScores = document.createElement("button");
     viewScores.textContent = "View High Scores";
     viewScores.setAttribute("style", "margin: 5px");
@@ -237,11 +235,12 @@ var storeScores = function () {
 }
 
 var loadScores = function () {
+    // Using the sort method to arrange the scores in ascending order
     var sortedScores = scoreArray.sort(function(a, b) {
         return b.scores - a.scores;
     })
 
-    // Looping through the sorted ascending array of scores and creating a list item for each
+    // Looping through the sorted array of scores and creating a list item for each to display the scores
     for (var i = 0; i < sortedScores.length; i++) {
         var scoreli = document.createElement('li');
         scoreli.textContent = sortedScores[i].initials + " ------ " + sortedScores[i].scores + " point(s)";
@@ -266,14 +265,13 @@ var goBack = function () {
     goBackBtn.addEventListener("click", restart);
 }
 
+// When clicked, will clear the scores and reload the page so all scores will be cleared
 var clearScores = function () {
     clearScoreBtn.addEventListener("click", function () { localStorage.removeItem('scores');
     scoreArray = [];
     restart();
     });
 }
-
-
 
 // Reload the entire page so the program when this function called
 var restart = function () {
@@ -286,9 +284,3 @@ highScoreBtn.addEventListener("click", viewHighScores);
 
 // On window load, call init which hides other displays except for start page
 init();
-
-
-
-
-// TO DO:
-// change the wrong and correct responses to HTML elements instead of appending

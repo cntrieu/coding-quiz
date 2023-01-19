@@ -2,6 +2,10 @@
     box-sizing: border-box;
 }
 
+:root {
+    --primary: #7b52ab;
+}
+
 body {
     font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
     "Lucida Sans", Arial, sans-serif;
@@ -38,11 +42,11 @@ main {
 
 #start-btn:hover {
     color: white;
-    background-color: purple;
+    background-color: var(--primary);
 }
 
-#high-score-btn:hover {
-    color: purple;
+#high-score-btn:hover, .high-score-btns:hover  {
+    color: var(--primary);
     cursor: pointer;
 }
 
@@ -57,12 +61,6 @@ main {
     margin: 1em;
     font-size: 1em;
 }
-
-.high-score-btns:hover {
-    background-color: purple;
-    cursor: pointer;
-}
-
 
 #scores-list {
     display: block;
@@ -90,6 +88,20 @@ main {
 
 #wrong {
     background-color: red;
+}
+
+.btn-answers {
+    display: block; 
+    margin: 10px; 
+    padding: 15px; 
+    font-size: 0.45em; 
+    background-color: #7b52ab; 
+    color: white; 
+    cursor: pointer;
+}
+
+.btn-answers:hover {
+    background-color: rgb(207, 148, 207);
 }
 
 @media screen and (max-width: 992px) {
