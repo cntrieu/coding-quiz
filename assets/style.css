@@ -24,6 +24,7 @@ main {
     margin-right: auto;
 }
 
+/* START PAGE */
 #start-page h1 {
  font-size: 3em;
 }
@@ -50,25 +51,12 @@ main {
     cursor: pointer;
 }
 
+/* QUESTION CONTAINER */
 #question-container {
     max-width: 50%;
     font-size: 1.5em;
     margin-left: auto;
     margin-right: auto;
-}
-
-#high-score-page button {
-    margin: 1em;
-    font-size: 1em;
-}
-
-#scores-list {
-    display: block;
-    max-width: 50%;
-    margin: 1em auto 1em auto;
-    background-color: rgb(209, 180, 209);
-    font-size: 1.5em; 
-    border-radius: 20px;
 }
 
 .questions {
@@ -104,6 +92,22 @@ main {
     background-color: rgb(207, 148, 207);
 }
 
+/* HIGH SCORE PAGE CONTAINER */
+#high-score-page button {
+    margin: 1em;
+    font-size: 1em;
+}
+
+#scores-list {
+    display: block;
+    max-width: 50%;
+    margin: 1em auto 1em auto;
+    background-color: rgb(209, 180, 209);
+    font-size: 1.5em; 
+    border-radius: 20px;
+}
+
+/* MEDIA */
 @media screen and (max-width: 992px) {
     main {
         margin: 0 auto 0 auto;
