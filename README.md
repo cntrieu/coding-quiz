@@ -8,6 +8,16 @@ Simply click the specified link to the deployed application and you will be pres
 
 The user can then view all of their previous scores as well as store their high score. The user can also clear their scores list.
 
+User presented initially with interactive page with a start button and an option to view previous high scores at the top left.
+![Image of the start page](/assets/screenshots/start-page.png)
+
+
+The high score page can be viewed at the end of the quiz or at the beginning of the first page with an option to clear the results.
+![Image of the high scores page](/assets/screenshots/scores.png)
+
+
+Users at the end of the quiz is presented an opportunity to input their initials.
+![Image of the submit initial page upon finishing the quiz](/assets/screenshots/initials.png)
 
 
 ## Contributing
